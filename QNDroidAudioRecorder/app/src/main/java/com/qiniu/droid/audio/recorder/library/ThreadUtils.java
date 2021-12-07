@@ -1,4 +1,4 @@
-package com.qiniu.droid.audio.recorder;
+package com.qiniu.droid.audio.recorder.library;
 
 import android.os.Handler;
 import android.os.Looper;
