@@ -13,6 +13,12 @@
 #define KXDXAudioBitsPerChannel 16
 #define kQNMaxVolume 87.2984313
 
+#ifndef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...) {}
+#endif
+
 static inline void run_on_main_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_main_queue(), block);
 }

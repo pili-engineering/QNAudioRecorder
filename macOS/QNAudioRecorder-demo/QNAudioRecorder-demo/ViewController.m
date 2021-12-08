@@ -9,6 +9,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <QNAudioRecorder/QNAudioRecorder.h>
 
+#ifndef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...) {}
+#endif
+
 @interface ViewController()<QNAudioRecorderDelegate>
 
 @property (nonatomic ,strong) QNMicrophoneRecorder *audioRecorder;
