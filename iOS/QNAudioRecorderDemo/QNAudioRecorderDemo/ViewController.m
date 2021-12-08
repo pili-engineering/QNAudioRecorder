@@ -6,16 +6,16 @@
 //
 
 #import "ViewController.h"
-#import <QNAudioRecorder/QNAudioRecorder.h>
+#import <QNAudioRecorder_iOS/QNAudioRecorder.h>
 
-@interface ViewController ()<QNMicrophoneRecorderDelegate>
+@interface ViewController ()<QNAudioRecorderDelegate>
 
 @property (nonatomic, strong) NSTimer *durationTimer;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, assign) NSInteger duration;
 @property (nonatomic, strong) UIButton *recordButton;
 
-@property (nonatomic, strong) QNMicrophoneRecorder *recorder;
+@property (nonatomic, strong) QNAudioRecorder *recorder;
 @property (nonatomic, strong) UILabel *volumeLabel;
 
 @end
@@ -31,11 +31,11 @@
 }
 
 - (void)setupAudioRecorder {
-    _recorder = [QNMicrophoneRecorder sharedInstance];
+    _recorder = [QNAudioRecorder sharedInstance];
     _recorder.delegate = self;
 }
 
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume {
+- (void)audioRecorder:(QNAudioRecorder *)recorder volume:(double)volume {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setVolume:volume];
     });

@@ -15,5 +15,5 @@ FOUNDATION_EXPORT const unsigned char QNAudioRecorderVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <QNAudioRecorder/PublicHeader.h>
 
-#import <QNAudioRecorder/QNMicrophoneRecorder.h>
+#import <QNAudioRecorder_iOS/QNAudioRecorder.h>
 

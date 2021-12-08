@@ -1,11 +1,11 @@
 //
-//  QNMicrophoneRecorder.m
+//  QNAudioRecorder.m
 //  QNAudioRecorder
 //
 //  Created by 冯文秀 on 2021/12/7.
 //
 
-#import "QNMicrophoneRecorder.h"
+#import "QNAudioRecorder.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <UIKit/UIKit.h>
 #import "QNCommon.h"
@@ -18,7 +18,7 @@
 
 const NSInteger kQNAudioCaptureSampleRate = 48000;
 
-@interface QNMicrophoneRecorder ()
+@interface QNAudioRecorder ()
 @property (nonatomic, assign) BOOL muted;
 @property (nonatomic, assign) BOOL allowAudioMixWithOthers;
 @property (nonatomic, assign) float microphoneInputGain;
@@ -34,13 +34,13 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
 
 @end
 
-@implementation QNMicrophoneRecorder
+@implementation QNAudioRecorder
 
 + (instancetype)sharedInstance {
-    static QNMicrophoneRecorder *sharedInstance;
+    static QNAudioRecorder *sharedInstance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[QNMicrophoneRecorder alloc] init];
+        sharedInstance = [[QNAudioRecorder alloc] init];
     });
     return sharedInstance;
 }
@@ -337,7 +337,7 @@ static OSStatus handleInputBuffer(void *inRefCon,
                                   UInt32 inNumberFrames,
                                   AudioBufferList *ioData) {
     @autoreleasepool {
-        QNMicrophoneRecorder *source = (__bridge QNMicrophoneRecorder *)inRefCon;
+        QNAudioRecorder *source = (__bridge QNAudioRecorder *)inRefCon;
         if (!source) {
             return -1;
         }
@@ -372,10 +372,10 @@ static OSStatus handleInputBuffer(void *inRefCon,
             [QNCommon scaleWithSat:&buffer scale:source.microphoneInputGain max:10.0 min:0.0];
         }
 
-        if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:didGetAudioBuffer:asbd:)]) {
+        if (source.delegate && [source.delegate respondsToSelector:@selector(audioRecorder:didGetAudioBuffer:asbd:)]) {
             AudioStreamBasicDescription *asbd = calloc(1, sizeof(AudioStreamBasicDescription));
             memcpy(asbd, &source->_asbd, sizeof(AudioStreamBasicDescription));
-            [source.delegate microphoneRecorder:source didGetAudioBuffer:&buffer asbd:asbd];
+            [source.delegate audioRecorder:source didGetAudioBuffer:&buffer asbd:asbd];
             free(asbd);
         }
         
@@ -383,8 +383,8 @@ static OSStatus handleInputBuffer(void *inRefCon,
         if (source.count >= 5) {
             source.count = 0;
             double volume = [QNCommon volumeWithAudioBuffer:&buffer];
-            if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:volume:)]) {
-                [source.delegate microphoneRecorder:source volume:volume];
+            if (source.delegate && [source.delegate respondsToSelector:@selector(audioRecorder:volume:)]) {
+                [source.delegate audioRecorder:source volume:volume];
             }
         }
 

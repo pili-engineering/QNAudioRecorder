@@ -1,5 +1,5 @@
 //
-//  QNMicrophoneRecorder.h
+//  QNAudioRecorder.h
 //  QNAudioRecorder
 //
 //  Created by 冯文秀 on 2021/12/7.
@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class QNMicrophoneRecorder;
+@class QNAudioRecorder;
 
-@protocol QNMicrophoneRecorderDelegate <NSObject>
+@protocol QNAudioRecorderDelegate <NSObject>
 
 @optional
 
@@ -21,25 +21,25 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @since v1.0.0
  */
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
+- (void)audioRecorder:(QNAudioRecorder *)audioRecorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
 
 /*!
  * @abstract 麦克风采集音频音量的回调，约 100ms 左右回调一次。
  *
  * @since v1.0.0
  */
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume;
+- (void)audioRecorder:(QNAudioRecorder *)audioRecorder volume:(double)volume;
 
 @end
 
-@interface QNMicrophoneRecorder : NSObject
+@interface QNAudioRecorder : NSObject
 
 /*!
- * @abstract QNMicrophoneRecorderDelegate 代理。
+ * @abstract QNAudioRecorderDelegate 代理。
  *
  * @since v1.0.0
  */
-@property (nonatomic, weak) id<QNMicrophoneRecorderDelegate> delegate;
+@property (nonatomic, weak) id<QNAudioRecorderDelegate> delegate;
 
 /*!
  * @abstract QNMicrophoneRecorder 单例。

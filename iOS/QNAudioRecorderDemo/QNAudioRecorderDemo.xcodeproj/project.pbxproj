@@ -14,16 +14,16 @@
 		AAA18807275F524B00736B59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AAA18806275F524B00736B59 /* Assets.xcassets */; };
 		AAA1880A275F524B00736B59 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AAA18808275F524B00736B59 /* LaunchScreen.storyboard */; };
 		AAA1880D275F524B00736B59 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA1880C275F524B00736B59 /* main.m */; };
-		AAA18849275F758A00736B59 /* QNAudioRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAA18834275F542D00736B59 /* QNAudioRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AAA188832760BF9600736B59 /* QNAudioRecorder_iOS.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = AAA188822760BF9000736B59 /* QNAudioRecorder_iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AAA18833275F542D00736B59 /* PBXContainerItemProxy */ = {
+		AAA188812760BF9000736B59 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AAA1882F275F542D00736B59 /* QNAudioRecorder.xcodeproj */;
+			containerPortal = AAA1887D2760BF9000736B59 /* QNAudioRecorder_iOS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AAA1881D275F53C000736B59;
-			remoteInfo = QNAudioRecorder;
+			remoteInfo = QNAudioRecorder_iOS;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -34,7 +34,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AAA18849275F758A00736B59 /* QNAudioRecorder.framework in CopyFiles */,
+				AAA188832760BF9600736B59 /* QNAudioRecorder_iOS.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,7 @@
 		AAA18809275F524B00736B59 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AAA1880B275F524B00736B59 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAA1880C275F524B00736B59 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		AAA1882F275F542D00736B59 /* QNAudioRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QNAudioRecorder.xcodeproj; path = ../QNAudioRecorder/QNAudioRecorder.xcodeproj; sourceTree = "<group>"; };
+		AAA1887D2760BF9000736B59 /* QNAudioRecorder_iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QNAudioRecorder_iOS.xcodeproj; path = ../QNAudioRecorder/QNAudioRecorder_iOS.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +70,7 @@
 		AAA187EE275F524800736B59 = {
 			isa = PBXGroup;
 			children = (
-				AAA1882F275F542D00736B59 /* QNAudioRecorder.xcodeproj */,
+				AAA1887D2760BF9000736B59 /* QNAudioRecorder_iOS.xcodeproj */,
 				AAA187F9275F524800736B59 /* QNAudioRecorderDemo */,
 				AAA187F8275F524800736B59 /* Products */,
 				AAA18846275F72D000736B59 /* Frameworks */,
@@ -103,19 +103,19 @@
 			path = QNAudioRecorderDemo;
 			sourceTree = "<group>";
 		};
-		AAA18830275F542D00736B59 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AAA18834275F542D00736B59 /* QNAudioRecorder.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		AAA18846275F72D000736B59 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AAA1887E2760BF9000736B59 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAA188822760BF9000736B59 /* QNAudioRecorder_iOS.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,8 +166,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = AAA18830275F542D00736B59 /* Products */;
-					ProjectRef = AAA1882F275F542D00736B59 /* QNAudioRecorder.xcodeproj */;
+					ProductGroup = AAA1887E2760BF9000736B59 /* Products */;
+					ProjectRef = AAA1887D2760BF9000736B59 /* QNAudioRecorder_iOS.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -178,11 +178,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AAA18834275F542D00736B59 /* QNAudioRecorder.framework */ = {
+		AAA188822760BF9000736B59 /* QNAudioRecorder_iOS.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = QNAudioRecorder.framework;
-			remoteRef = AAA18833275F542D00736B59 /* PBXContainerItemProxy */;
+			path = QNAudioRecorder_iOS.framework;
+			remoteRef = AAA188812760BF9000736B59 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
