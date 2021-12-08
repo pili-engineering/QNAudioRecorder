@@ -21,14 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @since v1.0.0
  */
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
 
 /*!
  * @abstract 麦克风采集音频音量的回调，约 100ms 左右回调一次。
  *
  * @since v1.0.0
  */
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder volume:(float)voulme;
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme;
 
 @end
 

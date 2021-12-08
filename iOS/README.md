@@ -39,7 +39,7 @@
 ### 初始化
 
 ```objc
-QNMicrophoneRecorder *recorder = [[QNMicrophoneRecorder alloc] init];
+QNMicrophoneRecorder *recorder = [QNMicrophoneRecorder sharedInstance];
 ```
 
 ### 设置代理
@@ -51,7 +51,7 @@ recorder.delegate = self;
 ### 实现回调
 
 ```objc
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder volume:(float)voulme {
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme {
     dispatch_async(dispatch_get_main_queue(), ^{
         // 更新 UI 展示音量
     });

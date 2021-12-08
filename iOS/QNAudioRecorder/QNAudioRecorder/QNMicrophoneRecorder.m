@@ -382,7 +382,7 @@ static OSStatus handleInputBuffer(void *inRefCon,
         source.count++;
         if (source.count >= 5) {
             source.count = 0;
-            float volume = [QNCommon volumeWithAudioBuffer:&buffer];
+            double volume = [QNCommon volumeWithAudioBuffer:&buffer];
             if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:volume:)]) {
                 [source.delegate microphoneRecorder:source volume:volume];
             }

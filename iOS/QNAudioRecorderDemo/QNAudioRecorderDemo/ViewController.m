@@ -35,7 +35,7 @@
     _recorder.delegate = self;
 }
 
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder volume:(float)voulme {
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setVolume:voulme];
     });
@@ -131,9 +131,11 @@
     if (button.selected) {
         [self startTimer];
         BOOL isSuccess = [_recorder startRecording];
+        NSLog(@"开始录制是否成功：%d", isSuccess);
     } else {
         [self stoptimer];
         BOOL isSuccess =[_recorder stopRecording];
+        NSLog(@"停止录制是否成功：%d", isSuccess);
     }
 }
 
