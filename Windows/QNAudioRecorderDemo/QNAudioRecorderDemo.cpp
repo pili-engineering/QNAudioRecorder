@@ -16,6 +16,7 @@ QNAudioRecorderDemo::QNAudioRecorderDemo() {
   std::cout << " microphone count : " << count;
   for (int i(0); i < count; ++i) {
     QNAudioDeviceInfo audio_info = microphone_interface->GetAudioRecordingDeviceInfo(i);
+    // 这里选择系统默认采集设备
     if (audio_info.is_default) {
       microphone_interface->SetAudioRecordingDevice(i);
       break;
