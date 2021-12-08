@@ -26,7 +26,6 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
 
 @property (nonatomic, assign) AudioComponentInstance componentInstance;
 @property (nonatomic, assign) AudioComponent component;
-@property (nonatomic, strong) dispatch_queue_t taskQueue;
 @property (nonatomic, assign) BOOL isRunning;
 @property (nonatomic, assign) AudioStreamBasicDescription asbd;
 @property (nonatomic, assign) BOOL isInInterruption;
@@ -41,7 +40,6 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     if(self = [super init]) {
         NSLog(@"QNMicrophoneRecorder init: %p", self);
         self.isRunning = NO;
-        self.taskQueue = dispatch_queue_create("com.qiniu.qrd.audiocapture", NULL);
         self.numberOfChannels = 1;
         self.microphoneInputGain = 1.0;
         self.count = 0;
@@ -188,34 +186,39 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     NSLog(@"QNMicrophoneRecorder dealloc: %p", self);
 }
 
-- (void)startRecording {
+- (BOOL)startRecording {
     NSLog(@"startRecording");
     
-    dispatch_async(self.taskQueue, ^{
-        if (self.isRunning) {
-            return;
-        }
-        
-        if ([self resetAudioSession]) {
-            OSStatus result = AudioOutputUnitStart(self.componentInstance);
-            NSLog(@"AudioOutputUnitStart result: %ld", (long)result);
+    if (self.isRunning) {
+        return NO;
+    }
+    
+    if ([self resetAudioSession]) {
+        OSStatus result = AudioOutputUnitStart(self.componentInstance);
+        if (result == noErr) {
             self.isRunning = YES;
+            return YES;
         }
-    });
+        NSLog(@"AudioOutputUnitStart result: %ld", (long)result);
+        return NO;
+    }
+    return NO;
 }
 
-- (void)stopRecording {
+- (BOOL)stopRecording {
     NSLog(@"stopRecording");
     
-    dispatch_async(self.taskQueue, ^{
-        if (!self.isRunning) {
-            return;
-        }
+    if (!self.isRunning) {
+        return NO;
+    }
         
-        OSStatus result = AudioOutputUnitStop(self.componentInstance);
-        NSLog(@"AudioOutputUnitStop result: %ld", (long)result);
+    OSStatus result = AudioOutputUnitStop(self.componentInstance);
+    if (result == noErr) {
         self.isRunning = NO;
-    });
+        return YES;
+    }
+    NSLog(@"AudioOutputUnitStop result: %ld", (long)result);
+    return NO;
 }
 
 #pragma mark - NSNotification
@@ -252,7 +255,7 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
             break;
     }
     
-    NSLog(@"handleRouteChange: %@ reason %@",[notification name], seccReason);
+    NSLog(@"handleRouteChange reason : %@", seccReason);
 }
 
 - (BOOL)resetAudioSession {
@@ -288,33 +291,33 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     
     NSInteger interruptionType = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
     if (interruptionType == AVAudioSessionInterruptionTypeBegan) {
-        dispatch_sync(self.taskQueue, ^{
-            if (self.isRunning) {
-                OSStatus result = AudioOutputUnitStop(self.componentInstance);
+        if (self.isRunning) {
+            OSStatus result = AudioOutputUnitStop(self.componentInstance);
+            if (result != noErr) {
                 NSLog(@"AVAudioSessionInterruptionTypeBegan, AudioOutputUnitStop, result: %d", result);
-                self.isInInterruption = YES;
             }
-        });
+            self.isInInterruption = YES;
+        }
     }
     else if (interruptionType == AVAudioSessionInterruptionTypeEnded) {
-        dispatch_async(self.taskQueue, ^{
-            if (self.isRunning) {
-                OSStatus result = AudioOutputUnitStart(self.componentInstance);
+        if (self.isRunning) {
+            OSStatus result = AudioOutputUnitStart(self.componentInstance);
+            if (result != noErr) {
                 NSLog(@"AVAudioSessionInterruptionTypeEnded, AudioOutputUnitStart, result: %d", result);
-                self.isInInterruption = NO;
             }
-        });
+            self.isInInterruption = NO;
+        }
     }
 }
 
 - (void)handleApplicationActive:(NSNotification *)notification {
-    dispatch_async(self.taskQueue, ^{
-        if (self.isInInterruption && self.isRunning) {
-            OSStatus result = AudioOutputUnitStart(self.componentInstance);
+    if (self.isInInterruption && self.isRunning) {
+        OSStatus result = AudioOutputUnitStart(self.componentInstance);
+        if (result != noErr) {
             NSLog(@"applicationActive, AudioOutputUnitStart, result: %d", result);
-            self.isInInterruption = NO;
         }
-    });
+        self.isInInterruption = NO;
+    }
 }
 
 #pragma mark - CallBack

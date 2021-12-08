@@ -44,16 +44,20 @@ NS_ASSUME_NONNULL_BEGIN
 /*!
  * @abstract 开始录制。
  *
+ * @return 是否成功
+ *
  * @since v1.0.0
  */
-- (void)startRecording;
+- (BOOL)startRecording;
 
 /*!
  * @abstract 停止录制。
  *
+ * @return 是否成功
+ *
  * @since v1.0.0
  */
-- (void)stopRecording;
+- (BOOL)stopRecording;
 
 @end
 

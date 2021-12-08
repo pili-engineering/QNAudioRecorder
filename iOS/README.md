@@ -61,11 +61,11 @@ recorder.delegate = self;
 ### 开启录制
 
 ```objc
-[recorder startRecording];
+BOOL isSuccess = [recorder startRecording];
 ```
 
 ### 停止录制
 
 ```objc
-[recorder stopRecording];
+BOOL isSuccess = [recorder stopRecording];
 ```

@@ -130,10 +130,10 @@
     button.selected = !button.selected;
     if (button.selected) {
         [self startTimer];
-        [_recorder startRecording];
+        BOOL isSuccess = [_recorder startRecording];
     } else {
         [self stoptimer];
-        [_recorder stopRecording];
+        BOOL isSuccess =[_recorder stopRecording];
     }
 }
 
