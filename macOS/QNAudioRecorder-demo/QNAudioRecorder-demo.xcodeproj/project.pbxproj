@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0CB2E02760C65100C6A4F0 /* QNAudioRecorder_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0CB2DE2760C64C00C6A4F0 /* QNAudioRecorder_macOS.framework */; };
+		2C0CB2E12760C65100C6A4F0 /* QNAudioRecorder_macOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C0CB2DE2760C64C00C6A4F0 /* QNAudioRecorder_macOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C5C3914275F50D80004904D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C3913275F50D80004904D /* AppDelegate.m */; };
 		2C5C3917275F50D80004904D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C3916275F50D80004904D /* ViewController.m */; };
 		2C5C3919275F50DC0004904D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C5C3918275F50DC0004904D /* Assets.xcassets */; };
 		2C5C391C275F50DC0004904D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C5C391A275F50DC0004904D /* Main.storyboard */; };
 		2C5C391F275F50DC0004904D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C5C391E275F50DC0004904D /* main.m */; };
-		2C5C3A2D276090900004904D /* QNAudioRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C5C3A2B276090860004904D /* QNAudioRecorder.framework */; };
-		2C5C3A2E276090900004904D /* QNAudioRecorder.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C5C3A2B276090860004904D /* QNAudioRecorder.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,7 +23,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2C5C3A2E276090900004904D /* QNAudioRecorder.framework in Embed Frameworks */,
+				2C0CB2E12760C65100C6A4F0 /* QNAudioRecorder_macOS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C0CB2DE2760C64C00C6A4F0 /* QNAudioRecorder_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QNAudioRecorder_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5C390F275F50D80004904D /* QNAudioRecorder-demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QNAudioRecorder-demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5C3912275F50D80004904D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2C5C3913275F50D80004904D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -41,7 +42,6 @@
 		2C5C391D275F50DC0004904D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C5C391E275F50DC0004904D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C5C3920275F50DC0004904D /* QNAudioRecorder_demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QNAudioRecorder_demo.entitlements; sourceTree = "<group>"; };
-		2C5C3A2B276090860004904D /* QNAudioRecorder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QNAudioRecorder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C5C3A2D276090900004904D /* QNAudioRecorder.framework in Frameworks */,
+				2C0CB2E02760C65100C6A4F0 /* QNAudioRecorder_macOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +92,7 @@
 		2C5C3A2A276090860004904D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2C5C3A2B276090860004904D /* QNAudioRecorder.framework */,
+				2C0CB2DE2760C64C00C6A4F0 /* QNAudioRecorder_macOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

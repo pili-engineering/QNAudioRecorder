@@ -7,17 +7,11 @@
 
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import <QNAudioRecorder/QNAudioRecorder.h>
-
-#ifndef __OPTIMIZE__
-#define NSLog(...) NSLog(__VA_ARGS__)
-#else
-#define NSLog(...) {}
-#endif
+#import <QNAudioRecorder_macOS/QNAudioRecorder.h>
 
 @interface ViewController()<QNAudioRecorderDelegate>
 
-@property (nonatomic ,strong) QNMicrophoneRecorder *audioRecorder;
+@property (nonatomic ,strong) QNAudioRecorder *audioRecorder;
 @property (weak) IBOutlet NSTextField *volumeText;
 @end
 
@@ -25,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.audioRecorder = [QNMicrophoneRecorder sharedInstance];
+    self.audioRecorder = [QNAudioRecorder sharedInstance];
     self.audioRecorder.delegate = self;
     // Do any additional setup after loading the view.
 }
@@ -57,7 +51,7 @@
 
 
 #pragma mark - QNAudioRecorderDelegate
--(void)audioRecorder:(QNMicrophoneRecorder *)audioReocrder onVolumeChanged:(double)volume{
+-(void)audioRecorder:(QNAudioRecorder *)audioReocrder onVolumeChanged:(double)volume{
     self.volumeText.stringValue = [NSString stringWithFormat:@"%lf",volume];
 }
 @end
