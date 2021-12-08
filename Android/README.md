@@ -20,6 +20,11 @@
    QNAudioRecorder mAudioRecorder;
    mAudioRecorder = new QNAudioRecorder(new QNAudioRecorder.QNAudioVolumeCallback() {
             @Override
+            /**
+             * 音量回调方法
+             *
+             * @param volume 音量值 [0.0 - 1.0f]
+             */
             public void onVolumeChanged(double volume) {
                 Log.i(MainActivity.class.getSimpleName(), "volume " + volume);
                 runOnUiThread(() -> {

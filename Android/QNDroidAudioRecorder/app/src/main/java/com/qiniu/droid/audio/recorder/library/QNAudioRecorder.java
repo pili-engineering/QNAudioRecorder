@@ -48,6 +48,11 @@ public class QNAudioRecorder {
   private AudioRecordThread audioThread;
 
   public interface QNAudioVolumeCallback {
+    /**
+     * 音量回调方法
+     *
+     * @param volume 音量值 [0.0 - 1.0f]
+     */
     void onVolumeChanged(double volume);
  }
 
