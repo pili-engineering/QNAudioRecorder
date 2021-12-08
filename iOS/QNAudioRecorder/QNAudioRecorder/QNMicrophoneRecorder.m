@@ -36,6 +36,15 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
 
 @implementation QNMicrophoneRecorder
 
++ (instancetype)sharedInstance {
+    static QNMicrophoneRecorder *sharedInstance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[QNMicrophoneRecorder alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (instancetype)init {
     if(self = [super init]) {
         NSLog(@"QNMicrophoneRecorder init: %p", self);

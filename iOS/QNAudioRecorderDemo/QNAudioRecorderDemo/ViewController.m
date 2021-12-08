@@ -31,7 +31,7 @@
 }
 
 - (void)setupAudioRecorder {
-    _recorder = [[QNMicrophoneRecorder alloc] init];
+    _recorder = [QNMicrophoneRecorder sharedInstance];
     _recorder.delegate = self;
 }
 

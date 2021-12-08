@@ -42,6 +42,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<QNMicrophoneRecorderDelegate> delegate;
 
 /*!
+ * @abstract QNMicrophoneRecorder 单例。
+ *
+ * @since v1.0.0
+ */
++ (instancetype)sharedInstance;
+
+/*!
  * @abstract 开始录制。
  *
  * @return 是否成功
