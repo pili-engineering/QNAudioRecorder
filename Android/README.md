@@ -13,7 +13,9 @@
 
 ## 接口使用
 ### 1. 添加应用权限
+```java
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
 
 ### 2. 创建录制类
 ```java
