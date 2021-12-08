@@ -11,12 +11,11 @@ QNAudioRecorderDemo::QNAudioRecorderDemo() {
   InitMinDump();
 #endif // WIN32
 
-  microphone_interface = QNAudioRecorder::CreateAudioRecorder();
-  microphone_interface->SetAudioRecordingVolumeListener(this);
+  microphone_interface = QNAudioRecorder::CreateAudioRecorder(this);
   int count = microphone_interface->GetAudioRecordingDeviceCount();
   std::cout << " microphone count : " << count;
   for (int i(0); i < count; ++i) {
-    audio_info = microphone_interface->GetAudioRecordingDeviceInfo(i);
+    QNAudioDeviceInfo audio_info = microphone_interface->GetAudioRecordingDeviceInfo(i);
     if (audio_info.is_default) {
       microphone_interface->SetAudioRecordingDevice(i);
       break;
@@ -43,7 +42,7 @@ void QNAudioRecorderDemo::StopRecording() {
   }
 }
 
-void QNAudioRecorderDemo::OnRecordVolumeChanged(uint32_t volume) {
+void QNAudioRecorderDemo::OnVolumeChanged(double volume) {
   std::cout << " record volume : " << volume << std::endl;
 }
 

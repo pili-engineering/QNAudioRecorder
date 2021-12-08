@@ -5,7 +5,7 @@
 using namespace qiniu;
 
 class QNAudioRecorderDemo
-    : public QNAudioRecorder::QNAudioRecordingVolumeListener {
+    : public QNAudioRecorder::QNAudioVolumeCallback {
  public:
   QNAudioRecorderDemo();
   ~QNAudioRecorderDemo();
@@ -13,9 +13,9 @@ class QNAudioRecorderDemo
   void StartRecording();
   void StopRecording();
   // implements of QNRecordVolumeListener
-  virtual void OnRecordVolumeChanged(uint32_t volume);
+  virtual void OnVolumeChanged(double volume);
 
-  QNAudioDeviceInfo audio_info;
+ private:
   QNAudioRecorder* microphone_interface;
 };
 

@@ -27,28 +27,25 @@ namespace qiniu {
 
   class QINIU_EXPORT_DLL QNAudioRecorder {
    public:
-     class QNAudioRecordingVolumeListener {
+     class QNAudioVolumeCallback {
       public:
-       virtual void OnRecordVolumeChanged(uint32_t volume) {};
+        // 音量值范围 [0 - 1.0]
+       virtual void OnVolumeChanged(double volume) {};
       protected:
-       ~QNAudioRecordingVolumeListener() {};
+       ~QNAudioVolumeCallback() {};
      };
 
    public:
      /**
       * 用于获取麦克风实例指针
+      * @param listener, 注册音量监听回调接口
       */
-     static QNAudioRecorder* CreateAudioRecorder();
+     static QNAudioRecorder* CreateAudioRecorder(QNAudioVolumeCallback* listener);
 
      /**
       * 释放由 ObtainMicrophoneInterface 返回的指针
       */
      static void DestroyAudioRecorder(QNAudioRecorder* interface_ptr);
-
-     /**
-      * 设置麦克风音量监听回调
-      */
-     virtual void SetAudioRecordingVolumeListener(QNAudioRecordingVolumeListener* listener) = 0;
 
      /**
       * 用于获取音频采集设备数量
@@ -63,7 +60,7 @@ namespace qiniu {
       * @param index，<= GetAudioRecordingDeviceCount()
       * @param audio_info 输出参数，用于返回指定的音频设备信息
       */
-     virtual QNAudioDeviceInfo GetAudioRecordingDeviceInfo(int32_t index) = 0;
+     virtual QNAudioDeviceInfo& GetAudioRecordingDeviceInfo(int32_t index) = 0;
 
      /**
       * 设置连麦使用的音频录制设备

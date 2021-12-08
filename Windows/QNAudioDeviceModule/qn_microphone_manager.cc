@@ -1,12 +1,14 @@
 ﻿#include "qn_microphone_manager.h"   
 #include <mmdeviceapi.h>
 
+#define  CALLBACK_PER_MS  100
+
 namespace qiniu {
 
   QNMicrophoneManager*  QNMicrophoneManager::global_microphone_session_ = nullptr;
-  QNMicrophoneManager* QNMicrophoneManager::ObtainMicrophoneSessionInterface() {
+  QNMicrophoneManager* QNMicrophoneManager::ObtainMicrophoneSessionInterface(QNAudioVolumeCallback* listener) {
     if (!global_microphone_session_) {
-      global_microphone_session_ = new QNMicrophoneManager;
+      global_microphone_session_ = new QNMicrophoneManager(listener);
     }
     return global_microphone_session_;
   }
@@ -23,9 +25,9 @@ namespace qiniu {
     }
   }
 
-  QNMicrophoneManager::QNMicrophoneManager()
-      : adm_ptr_(nullptr)
-      , record_volume_listener_(nullptr) {
+  QNMicrophoneManager::QNMicrophoneManager(QNAudioVolumeCallback* listener)
+      : record_volume_listener_(listener)
+      , last_callback_time_(std::chrono::steady_clock::now()){
 
       //create adm
     adm_ptr_ = webrtc::CreateAudioDeviceWithDataObserver(
@@ -59,12 +61,18 @@ namespace qiniu {
       const size_t bytes_per_sample,
       const size_t num_channels,
       const uint32_t samples_per_sec) {
+    std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
     if (record_volume_listener_ ) {
-      uint32_t volume = 0;
+      double volume = 0.0;
       volume = ProcessAudioLevel(
         (int16_t *)audio_samples,
         bytes_per_sample * num_samples / sizeof(int16_t));
-        record_volume_listener_->OnRecordVolumeChanged(volume);
+      auto dur_time = std::chrono::duration_cast<std::chrono::milliseconds>(
+        now_time - last_callback_time_).count();
+      if (dur_time >= CALLBACK_PER_MS) {
+        record_volume_listener_->OnVolumeChanged(volume);
+        last_callback_time_ = now_time;
+      }
     }
   }
 
@@ -76,7 +84,7 @@ namespace qiniu {
       const uint32_t samples_per_sec) {
   }
 
-  void QNMicrophoneManager::SetAudioRecordingVolumeListener(QNAudioRecordingVolumeListener* listener) {
+  void QNMicrophoneManager::SetAudioRecordingVolumeListener(QNAudioVolumeCallback* listener) {
     record_volume_listener_ = listener;
   }
 
@@ -84,7 +92,7 @@ namespace qiniu {
     return GetAudioRecordingDeviceCountInternal();
   }
 
-  QNAudioDeviceInfo QNMicrophoneManager::GetAudioRecordingDeviceInfo(int32_t index) {
+  QNAudioDeviceInfo& QNMicrophoneManager::GetAudioRecordingDeviceInfo(int32_t index) {
     return GetAudioRecordingDeviceInfoInternal(index);
   }
 
@@ -151,7 +159,7 @@ namespace qiniu {
     return audio_recording_device_info_vec_.size();
   }
 
-  QNAudioDeviceInfo QNMicrophoneManager::GetAudioRecordingDeviceInfoInternal(int32_t index) {
+  QNAudioDeviceInfo& QNMicrophoneManager::GetAudioRecordingDeviceInfoInternal(int32_t index) {
     QNAudioDeviceInfo tmp_recording_info;
     QN_LOG_INFO << "audio recording index:" << index
       << ", current audio recording size:" << audio_recording_device_info_vec_.size();
@@ -305,8 +313,8 @@ namespace qiniu {
     return QNRTC_FAILED;
   }
 
-  uint32_t QNMicrophoneManager::ProcessAudioLevel(const int16_t* data, const int32_t& data_size) {
-    uint32_t ret = 0;
+  double QNMicrophoneManager::ProcessAudioLevel(const int16_t* data, const int32_t& data_size) {
+    double ret = 0.0;
     if (data_size > 0) {
       int32_t sum = 0;
       int16_t* pos = (int16_t *)data;
@@ -315,8 +323,8 @@ namespace qiniu {
         pos++;
       }
 
-      ret = sum * 500 / (data_size * VOLUMEMAX);
-      ret = core_min(ret, 100);
+      ret = sum * 5.0 / (data_size * VOLUMEMAX);
+      ret = core_min(ret, 1.0);
     }
 
     return ret;
