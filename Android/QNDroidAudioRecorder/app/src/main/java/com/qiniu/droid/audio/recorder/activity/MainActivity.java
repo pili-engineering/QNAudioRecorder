@@ -10,13 +10,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.qiniu.droid.audio.recorder.PermissionChecker;
-import com.qiniu.droid.audio.recorder.QNAudioRecorder;
+import com.qiniu.droid.audio.recorder.library.QNAudioRecorder;
 import com.qiniu.droid.audio.recorder.R;
 
 
 public class MainActivity extends AppCompatActivity {
 
    QNAudioRecorder mAudioRecorder;
+   boolean mStarted;
    TextView mVolumeText;
 
     @Override
@@ -40,13 +41,17 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Some permissions is not approved !!!", Toast.LENGTH_SHORT).show();
             return;
         }
-        boolean success = mAudioRecorder.startRecording();
-        Toast.makeText(this, "开始采集 " + (success ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
+        if (!mStarted) {
+            mStarted = mAudioRecorder.startRecording();
+            Toast.makeText(this, "开始采集 " + (mStarted ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void stopRecord(View view) {
-        boolean success = mAudioRecorder.stopRecording();
-        Toast.makeText(this, "停止采集 " + (success ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
+        if (mStarted) {
+            mStarted = !mAudioRecorder.stopRecording();
+            Toast.makeText(this, "停止采集 " + (!mStarted ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private boolean isPermissionOK() {
