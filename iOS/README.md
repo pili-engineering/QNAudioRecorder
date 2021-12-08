@@ -51,7 +51,7 @@ recorder.delegate = self;
 ### 实现回调
 
 ```objc
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme {
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume {
     dispatch_async(dispatch_get_main_queue(), ^{
         // 更新 UI 展示音量
     });
