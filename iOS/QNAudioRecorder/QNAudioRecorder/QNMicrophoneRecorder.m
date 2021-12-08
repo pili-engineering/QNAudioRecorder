@@ -10,6 +10,12 @@
 #import <UIKit/UIKit.h>
 #import "QNCommon.h"
 
+#ifdef DEBUG
+    #define NSLog NSLog
+#else
+    #define NSLog(...);
+#endif
+
 const NSInteger kQNAudioCaptureSampleRate = 48000;
 
 @interface QNMicrophoneRecorder ()
@@ -25,6 +31,8 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
 @property (nonatomic, assign) AudioStreamBasicDescription asbd;
 @property (nonatomic, assign) BOOL isInInterruption;
 
+@property (nonatomic, assign) NSInteger count;
+
 @end
 
 @implementation QNMicrophoneRecorder
@@ -36,6 +44,7 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
         self.taskQueue = dispatch_queue_create("com.qiniu.qrd.audiocapture", NULL);
         self.numberOfChannels = 1;
         self.microphoneInputGain = 1.0;
+        self.count = 0;
 
         [self setupASBD];
         [self setupAudioComponent];
@@ -176,7 +185,7 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     AudioComponentInstanceDispose(self.componentInstance);
     self.componentInstance = nil;
     self.component = nil;
-    NSLog(@"MicrophoneSource dealloc: %p", self);
+    NSLog(@"QNMicrophoneRecorder dealloc: %p", self);
 }
 
 - (void)startRecording {
@@ -351,13 +360,20 @@ static OSStatus handleInputBuffer(void *inRefCon,
             [QNCommon scaleWithSat:&buffer scale:source.microphoneInputGain max:10.0 min:0.0];
         }
 
-        
-        if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:didGetAudioBuffer:asbd:volume:)]) {
+        if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:didGetAudioBuffer:asbd:)]) {
             AudioStreamBasicDescription *asbd = calloc(1, sizeof(AudioStreamBasicDescription));
             memcpy(asbd, &source->_asbd, sizeof(AudioStreamBasicDescription));
-            float volume = [QNCommon volumeWithAudioBuffer:&buffer];
-            [source.delegate microphoneRecorder:source didGetAudioBuffer:&buffer asbd:asbd volume:volume];
+            [source.delegate microphoneRecorder:source didGetAudioBuffer:&buffer asbd:asbd];
             free(asbd);
+        }
+        
+        source.count++;
+        if (source.count >= 5) {
+            source.count = 0;
+            float volume = [QNCommon volumeWithAudioBuffer:&buffer];
+            if (source.delegate && [source.delegate respondsToSelector:@selector(microphoneRecorder:volume:)]) {
+                [source.delegate microphoneRecorder:source volume:volume];
+            }
         }
 
         free(buffer.mData);

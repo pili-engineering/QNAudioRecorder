@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd volume:(float)voulme;
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder volume:(float)voulme;
 
 @end
 

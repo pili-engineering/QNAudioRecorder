@@ -35,7 +35,7 @@
     _recorder.delegate = self;
 }
 
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd volume:(float)voulme {
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)Recorder volume:(float)voulme {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setVolume:voulme];
     });
