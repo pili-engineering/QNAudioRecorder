@@ -35,9 +35,9 @@
     _recorder.delegate = self;
 }
 
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme {
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume {
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self setVolume:voulme];
+        [self setVolume:volume];
     });
 }
 

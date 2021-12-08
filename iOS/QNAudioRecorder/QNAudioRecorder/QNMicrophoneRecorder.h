@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @since v1.0.0
  */
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)voulme;
+- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume;
 
 @end
 
