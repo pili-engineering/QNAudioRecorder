@@ -20,7 +20,7 @@
 在需要使用的类中，引入后使用，具体方式可参见 QNAudioRecorder-demo
 
 ```Objective-C
-#import <QNAudioRecorder_macOS/QNAudioRecorder.h>
+#import <QNAudioRecorder_macOS/QNAudioRecorder_macOS.h>
 ```
 
 
@@ -35,10 +35,10 @@
 
 ## API 使用
 
-### 初始化
+### 开启录制
 
 ```objc
-QNAudioRecorder *recorder = [QNAudioRecorder sharedInstance];
+QNAudioRecorder *recorder = [QNAudioRecorder start];
 ```
 
 ### 设置代理
@@ -57,14 +57,8 @@ recorder.delegate = self;
 }
 ```
 
-### 开启录制
-
-```objc
-[recorder startRecording];
-```
-
 ### 停止录制
 
 ```objc
-[recorder stopRecording];
+[recorder stop];
 ```
