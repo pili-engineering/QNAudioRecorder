@@ -43,7 +43,7 @@ namespace qiniu {
      static QNAudioRecorder* CreateAudioRecorder(QNAudioVolumeCallback* listener);
 
      /**
-      * 释放由 ObtainMicrophoneInterface 返回的指针
+      * 释放由 CreateAudioRecorder 返回的指针
       */
      static void DestroyAudioRecorder(QNAudioRecorder* interface_ptr);
 
