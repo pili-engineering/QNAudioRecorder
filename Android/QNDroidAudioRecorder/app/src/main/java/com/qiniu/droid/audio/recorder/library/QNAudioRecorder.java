@@ -47,6 +47,8 @@ public class QNAudioRecorder {
   private AudioRecord audioRecord;
   private AudioRecordThread audioThread;
 
+  private static QNAudioRecorder recorderInstance = null;
+
   public interface QNAudioVolumeCallback {
     /**
      * 音量回调方法
@@ -112,13 +114,7 @@ public class QNAudioRecorder {
     }
   }
 
-  /**
-   * QNAudioRecorder 构造方法
-   *
-   * @param volumeCallback 音量回调接口
-   */
-  public QNAudioRecorder(QNAudioVolumeCallback volumeCallback) {
-    this.volumeCallback = volumeCallback;
+  QNAudioRecorder() {
     this.audioSource = DEFAULT_AUDIO_SOURCE;
     this.audioFormat = DEFAULT_AUDIO_FORMAT;
   }
@@ -172,19 +168,12 @@ public class QNAudioRecorder {
     return framesPerBuffer;
   }
 
-  /**
-   * 开始音频采集
-   *
-   * @return 开始是否成功
-   */
-  public boolean startRecording() {
-    Log.d(TAG, "startRecording");
-    if (audioRecord == null) {
-      initRecording(DEFAULT_SAMPLE_RATE_HZ, DEFAULT_CHANNEL);
-    }
+  private boolean startInternal(QNAudioVolumeCallback volumeCallback) {
+    initRecording(DEFAULT_SAMPLE_RATE_HZ, DEFAULT_CHANNEL);
+    this.volumeCallback = volumeCallback;
 
-    assertTrue(audioRecord != null);
-    assertTrue(audioThread == null);
+    assertTrue(recorderInstance.audioRecord != null);
+    assertTrue(recorderInstance.audioThread == null);
     try {
       audioRecord.startRecording();
     } catch (IllegalStateException e) {
@@ -202,12 +191,36 @@ public class QNAudioRecorder {
   }
 
   /**
+   * 开始音频采集
+   *
+   * @param volumeCallback 音量回调接口类
+   * @return 开启成功返回 QNAudioRecorder 对象，失败返回为null；音频采集为独占方式，不支持多次 start
+   */
+  public static QNAudioRecorder start(QNAudioVolumeCallback volumeCallback) {
+    Log.d(TAG, "startRecording");
+    if (recorderInstance == null) {
+      recorderInstance = new QNAudioRecorder();
+    }
+    if (recorderInstance.audioRecord != null || recorderInstance.audioThread != null) {
+      Log.e(TAG, "Start without stop.");
+      return null;
+    }
+
+    boolean success = recorderInstance.startInternal(volumeCallback);
+    return success ? recorderInstance : null;
+  }
+
+  /**
    * 停止采集接口
    *
    * @return 停止是否成功
    */
-  public boolean stopRecording() {
+  public boolean stop() {
     Log.d(TAG, "stopRecording");
+    if (recorderInstance.audioRecord = null) {
+      Log.e(TAG, "Stop without start.");
+      return false;
+    }
     assertTrue(audioThread != null);
     audioThread.stopThread();
     if (!ThreadUtils.joinUninterruptibly(audioThread, AUDIO_RECORD_THREAD_JOIN_TIMEOUT_MS)) {

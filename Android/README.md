@@ -17,33 +17,31 @@
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
-### 2. 创建录制类
+### 2. 开始音频录制
+> 音频录制需要访问平台硬件麦克风，为独占方式，不允许重复 start；需要保证 stop 后再次 start
 ```java
-   QNAudioRecorder mAudioRecorder;
-   mAudioRecorder = new QNAudioRecorder(new QNAudioRecorder.QNAudioVolumeCallback() {
-            @Override
-            /**
-             * 音量回调方法
-             *
-             * @param volume 音量值 [0.0 - 1.0f]
-             */
-            public void onVolumeChanged(double volume) {
-                Log.i(MainActivity.class.getSimpleName(), "volume " + volume);
-                runOnUiThread(() -> {
-                    mVolumeText.setText("音量: " + volume);
-                });
-            }
+```java
+   static QNAudioRecorder mAudioRecorder;
+
+   mAudioRecorder = QNAudioRecorder.start(new QNAudioRecorder.QNAudioVolumeCallback() {
+       @Override
+       /**
+        * 音量回调方法
+        *
+        * @param volume 音量值 [0.0 - 1.0f]
+        */
+       public void onVolumeChanged(double volume) {
+           Log.i(MainActivity.class.getSimpleName(), "volume " + volume);
+           runOnUiThread(() -> {
+               mVolumeText.setText("音量: " + volume);
+           });
+       }
    });
+   mStarted = (mAudioRecorder != null);
+
 ```
 
-### 3. 开始音频录制
+### 3. 停止音频录制
 ```java
-    boolean success = mAudioRecorder.startRecording();
+    boolean success = mAudioRecorder.stop();
 ```
-
-### 4. 停止音频录制
-```java
-    boolean success = mAudioRecorder.stopRecording();
-
-```
-

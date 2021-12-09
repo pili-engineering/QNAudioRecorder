@@ -16,7 +16,7 @@ import com.qiniu.droid.audio.recorder.R;
 
 public class MainActivity extends AppCompatActivity {
 
-   QNAudioRecorder mAudioRecorder;
+   static QNAudioRecorder mAudioRecorder;
    boolean mStarted;
    TextView mVolumeText;
 
@@ -25,15 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mVolumeText = findViewById(R.id.volume_text);
-        mAudioRecorder = new QNAudioRecorder(new QNAudioRecorder.QNAudioVolumeCallback() {
-            @Override
-            public void onVolumeChanged(double volume) {
-                Log.i(MainActivity.class.getSimpleName(), "volume " + volume);
-                runOnUiThread(() -> {
-                    mVolumeText.setText("音量: " + volume);
-                });
-            }
-        });
     }
 
     public void startRecord(View view) {
@@ -42,14 +33,23 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (!mStarted) {
-            mStarted = mAudioRecorder.startRecording();
+            mAudioRecorder = QNAudioRecorder.start(new QNAudioRecorder.QNAudioVolumeCallback() {
+                @Override
+                public void onVolumeChanged(double volume) {
+                    Log.i(MainActivity.class.getSimpleName(), "volume " + volume);
+                    runOnUiThread(() -> {
+                        mVolumeText.setText("音量: " + volume);
+                    });
+                }
+            });
+            mStarted = (mAudioRecorder != null);
             Toast.makeText(this, "开始采集 " + (mStarted ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
         }
     }
 
     public void stopRecord(View view) {
         if (mStarted) {
-            mStarted = !mAudioRecorder.stopRecording();
+            mStarted = !mAudioRecorder.stop();
             Toast.makeText(this, "停止采集 " + (!mStarted ? "成功" : "失败"), Toast.LENGTH_SHORT).show();
         }
     }
