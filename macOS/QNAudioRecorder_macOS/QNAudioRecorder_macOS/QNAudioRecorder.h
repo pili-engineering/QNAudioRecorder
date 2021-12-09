@@ -27,24 +27,18 @@
 @property (nonatomic, weak) id<QNAudioRecorderDelegate> delegate;
 
 /**
- * 初始化方法
- *
- * @return QNAudioRecorder实例
- */
-+ (QNAudioRecorder *) sharedInstance;
-
-/**
  * 开始录制
  *
- * @return 是否成功开始录制   YES：成功    NO：失败
+ * @return QNAudioRecorder   注：成功时返回QNAudioRecorder实例;
+ *                           失败时返回nil
  */
-- (BOOL)startRecording;
++ (QNAudioRecorder *) start;
 
 /**
  * 停止录制
  *
  * @return 是否成功停止录制   YES：成功    NO：失败
  */
-- (BOOL)stopRecording;
+- (BOOL)stop;
 @end
 

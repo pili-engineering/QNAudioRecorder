@@ -33,11 +33,16 @@ static inline void run_on_main_queue(void (^block)(void)) {
 static QNAudioRecorder *_sharedInstance;
 
 #pragma mark - public
-+(QNAudioRecorder*) sharedInstance{
++(QNAudioRecorder*) start{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[QNAudioRecorder alloc] init];
     });
+    [_sharedInstance startTimer];
+    OSStatus status = AudioOutputUnitStart(_sharedInstance.componentInstance);
+    if (status != noErr) {
+        return nil;
+    }
     return _sharedInstance;
 }
 
@@ -53,27 +58,12 @@ static QNAudioRecorder *_sharedInstance;
     return self;
 }
 
-
-/**
- * 开始录制
- *
- * @return 是否成功开始录制   YES：成功    NO：失败
- */
-- (BOOL)startRecording{
-    [self startTimer];
-    OSStatus status = AudioOutputUnitStart(self.componentInstance);
-    if (status != noErr) {
-        return NO;
-    }
-    return YES;
-}
-
 /**
  * 停止录制
  *
  * @return 是否成功停止录制   YES：成功    NO：失败
  */
-- (BOOL)stopRecording{
+- (BOOL)stop{
     OSStatus status = AudioOutputUnitStop(self.componentInstance);
     [self stopTimer];
     if (status != noErr) {

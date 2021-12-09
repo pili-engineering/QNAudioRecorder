@@ -19,8 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.audioRecorder = [QNAudioRecorder sharedInstance];
-    self.audioRecorder.delegate = self;
     // Do any additional setup after loading the view.
 }
 
@@ -32,8 +30,9 @@
 }
 
 - (IBAction)startBtn:(id)sender {
-    BOOL ret = [self.audioRecorder startRecording];
-    if (ret) {
+    self.audioRecorder = [QNAudioRecorder start];
+    if (self.audioRecorder) {
+        self.audioRecorder.delegate = self;
         NSLog(@"开始录制");
     }else{
         NSLog(@"开始录制失败");
@@ -41,7 +40,7 @@
 }
 
 - (IBAction)stopBtn:(id)sender {
-    BOOL ret = [self.audioRecorder stopRecording];
+    BOOL ret = [self.audioRecorder stop];
     if (ret) {
         NSLog(@"停止录制");
     }else{
