@@ -30,10 +30,13 @@
 }
 
 - (IBAction)startBtn:(id)sender {
-    self.audioRecorder = [QNAudioRecorder start];
-    if (self.audioRecorder) {
-        self.audioRecorder.delegate = self;
-        NSLog(@"开始录制");
+    QNAudioRecorder *recorder = [QNAudioRecorder start];
+    if (recorder) {
+        self.audioRecorder = recorder;
+        if (self.audioRecorder) {
+            self.audioRecorder.delegate = self;
+            NSLog(@"开始录制");
+        }
     }else{
         NSLog(@"开始录制失败");
     }

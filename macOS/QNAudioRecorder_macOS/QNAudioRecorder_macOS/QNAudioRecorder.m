@@ -22,6 +22,7 @@ static inline void run_on_main_queue(void (^block)(void)) {
 @property (nonatomic, assign) AudioStreamBasicDescription asbd;
 @property (nonatomic, strong) dispatch_source_t timer;
 @property (nonatomic, assign) double volume;
+@property (nonatomic, assign) BOOL isRecording;
 
 @end
 
@@ -39,10 +40,14 @@ static QNAudioRecorder *_sharedInstance;
         _sharedInstance = [[QNAudioRecorder alloc] init];
     });
     [_sharedInstance startTimer];
+    if (_sharedInstance.isRecording) {
+        return nil;
+    }
     OSStatus status = AudioOutputUnitStart(_sharedInstance.componentInstance);
     if (status != noErr) {
         return nil;
     }
+    _sharedInstance.isRecording = YES;
     return _sharedInstance;
 }
 
@@ -69,6 +74,7 @@ static QNAudioRecorder *_sharedInstance;
     if (status != noErr) {
         return NO;
     }
+    self.isRecording = NO;
     return YES;
 }
 
