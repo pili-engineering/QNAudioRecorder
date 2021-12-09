@@ -2,8 +2,8 @@
 #include "qn_microphone_manager.h"
 
 namespace qiniu {
-  QNAudioRecorder* QNAudioRecorder::CreateAudioRecorder(QNAudioVolumeCallback* listener) {
-    QNMicrophoneManager* tmp_ptr = QNMicrophoneManager::ObtainMicrophoneSessionInterface(listener);
+  QNAudioRecorder* QNAudioRecorder::CreateAudioRecorder() {
+    QNMicrophoneManager* tmp_ptr = QNMicrophoneManager::ObtainMicrophoneSessionInterface();
     if (!tmp_ptr) {
       return nullptr;
     }

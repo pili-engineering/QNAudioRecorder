@@ -6,9 +6,9 @@
 namespace qiniu {
 
   QNMicrophoneManager*  QNMicrophoneManager::global_microphone_session_ = nullptr;
-  QNMicrophoneManager* QNMicrophoneManager::ObtainMicrophoneSessionInterface(QNAudioVolumeCallback* listener) {
+  QNMicrophoneManager* QNMicrophoneManager::ObtainMicrophoneSessionInterface() {
     if (!global_microphone_session_) {
-      global_microphone_session_ = new QNMicrophoneManager(listener);
+      global_microphone_session_ = new QNMicrophoneManager();
     }
     return global_microphone_session_;
   }
@@ -25,9 +25,8 @@ namespace qiniu {
     }
   }
 
-  QNMicrophoneManager::QNMicrophoneManager(QNAudioVolumeCallback* listener)
-      : record_volume_listener_(listener)
-      , last_callback_time_(std::chrono::steady_clock::now()){
+  QNMicrophoneManager::QNMicrophoneManager()
+      : last_callback_time_(std::chrono::steady_clock::now()){
 
       //create adm
     adm_ptr_ = webrtc::CreateAudioDeviceWithDataObserver(
@@ -47,7 +46,7 @@ namespace qiniu {
   QNMicrophoneManager::~QNMicrophoneManager() {
     if (adm_ptr_) {
       if (adm_ptr_->Recording()) {
-        StopRecording();
+        Stop();
       }
       adm_ptr_->Terminate();
       adm_ptr_.release();
@@ -62,7 +61,7 @@ namespace qiniu {
       const size_t num_channels,
       const uint32_t samples_per_sec) {
     std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-    if (record_volume_listener_ ) {
+    if (record_volume_callback_ ) {
       double volume = 0.0;
       volume = ProcessAudioLevel(
         (int16_t *)audio_samples,
@@ -70,7 +69,7 @@ namespace qiniu {
       auto dur_time = std::chrono::duration_cast<std::chrono::milliseconds>(
         now_time - last_callback_time_).count();
       if (dur_time >= CALLBACK_PER_MS) {
-        record_volume_listener_->OnVolumeChanged(volume);
+        record_volume_callback_->OnVolumeChanged(volume);
         last_callback_time_ = now_time;
       }
     }
@@ -82,10 +81,6 @@ namespace qiniu {
       const size_t bytes_per_sample,
       const size_t num_channels,
       const uint32_t samples_per_sec) {
-  }
-
-  void QNMicrophoneManager::SetAudioRecordingVolumeListener(QNAudioVolumeCallback* listener) {
-    record_volume_listener_ = listener;
   }
 
   int32_t QNMicrophoneManager::GetAudioRecordingDeviceCount() {
@@ -100,11 +95,12 @@ namespace qiniu {
     return SetAudioRecordingDeviceInternal(index);
   }
 
-  int32_t QNMicrophoneManager::StartRecording() {
+  int32_t QNMicrophoneManager::Start(QNAudioVolumeCallback* callback) {
+    record_volume_callback_ = callback;
     return StartRecordingInternal();
   }
 
-  int32_t QNMicrophoneManager::StopRecording() {
+  int32_t QNMicrophoneManager::Stop() {
     return StopRecordingInternal();
   }
 

@@ -23,7 +23,7 @@ namespace qiniu {
     : public AudioDeviceDataObserver
     , public QNAudioRecorder {
    public:
-     static QNMicrophoneManager* ObtainMicrophoneSessionInterface(QNAudioVolumeCallback* listener);
+     static QNMicrophoneManager* ObtainMicrophoneSessionInterface();
      static void DestroyMicrophoneSessionInterface(QNMicrophoneManager* ptr);
      virtual ~QNMicrophoneManager();
 
@@ -43,15 +43,14 @@ namespace qiniu {
         const uint32_t samples_per_sec);
 
     // implements of QNMicrophoneInterface
-    virtual void SetAudioRecordingVolumeListener(QNAudioVolumeCallback* listener);
     virtual int32_t GetAudioRecordingDeviceCount();
     virtual QNAudioDeviceInfo& GetAudioRecordingDeviceInfo(int32_t index);
     virtual int32_t SetAudioRecordingDevice(int32_t index);
-    virtual int32_t StartRecording();
-    virtual int32_t StopRecording();
+    virtual int32_t Start(QNAudioVolumeCallback* callback);
+    virtual int32_t Stop();
 
    private:
-    QNMicrophoneManager(QNAudioVolumeCallback* listener);
+    QNMicrophoneManager();
     QNMicrophoneManager(const QNMicrophoneManager&) = delete;
     QNMicrophoneManager operator = (const QNMicrophoneManager&) = delete;
 
@@ -72,7 +71,7 @@ namespace qiniu {
     int32_t GetDefaultDeviceId(bool is_recording, string& device_id);
    private:
      static QNMicrophoneManager*                    global_microphone_session_;
-     QNAudioVolumeCallback*                         record_volume_listener_;
+     QNAudioVolumeCallback*                         record_volume_callback_;
      std::shared_ptr<rtc::Thread>                   worker_thread_ptr_;
      rtc::scoped_refptr<webrtc::AudioDeviceModule>  adm_ptr_;
      std::vector<QNAudioDeviceInfo>                 audio_recording_device_info_vec_;

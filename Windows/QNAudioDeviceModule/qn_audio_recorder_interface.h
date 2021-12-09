@@ -40,7 +40,7 @@ namespace qiniu {
       * 用于获取麦克风实例指针
       * @param listener, 注册音量监听回调接口
       */
-     static QNAudioRecorder* CreateAudioRecorder(QNAudioVolumeCallback* listener);
+     static QNAudioRecorder* CreateAudioRecorder();
 
      /**
       * 释放由 CreateAudioRecorder 返回的指针
@@ -76,14 +76,14 @@ namespace qiniu {
       *
       * @return 成功返回 0，其它请参考错误码列表
       */
-     virtual int32_t StartRecording() = 0;
+     virtual int32_t Start(QNAudioVolumeCallback* callback) = 0;
 
      /**
       * 关闭麦克风采集
       *
       * @return 成功返回 0，其它请参考错误码列表
       */
-     virtual int32_t StopRecording() = 0;
+     virtual int32_t Stop() = 0;
 
    protected:
     ~QNAudioRecorder() {};
