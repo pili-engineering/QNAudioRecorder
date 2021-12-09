@@ -43,7 +43,7 @@ static QNAudioRecorder *sharedInstance;
 
 - (instancetype)init {
     if(self = [super init]) {
-        NSLog(@"QNMicrophoneRecorder init: %p", self);
+        NSLog(@"QNAudioRecorder init: %p", self);
         self.isRunning = NO;
         self.numberOfChannels = 1;
         self.microphoneInputGain = 1.0;
@@ -188,7 +188,7 @@ static QNAudioRecorder *sharedInstance;
     AudioComponentInstanceDispose(self.componentInstance);
     self.componentInstance = nil;
     self.component = nil;
-    NSLog(@"QNMicrophoneRecorder dealloc: %p", self);
+    NSLog(@"QNAudioRecorder dealloc: %p", self);
 }
 
 #pragma mark - Public

@@ -11,7 +11,7 @@
 
 ## 编译获取 SDK
 
-编译 [iOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/blob/main/iOS)下的 `QNAudioRecorder`，工程 Products 会自动生成 QNAudioRecorder_iOS.framework，右键 "Show in Finder" 后，即可拿到对应的 SDK 真机版本，注意区分 Debug 和 Release。
+编译 [iOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/tree/main/iOS)下的 `QNAudioRecorder`，工程 Products 会自动生成 QNAudioRecorder_iOS.framework，右键 "Show in Finder" 后，即可拿到对应的 SDK 真机版本，注意区分 Debug 和 Release。
 
 
 ## 手动导入 SDK

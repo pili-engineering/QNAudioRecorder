@@ -36,7 +36,7 @@
 /*!
  * @abstract 开始录制。
  *
- * @warning 该方法使用到了系统内置麦克风设备，该设备为系统独占资源，请勿重复调用，如多次调用会失败并返回 nil。
+ * @warning 该方法使用到了系统内置麦克风设备，为系统独占资源，请勿重复调用，如多次调用会失败并返回 nil。
  *
  * @return QNAudioRecorder 实例，成功则返回 QNAudioRecorder 实例，失败则返回为空
  *
