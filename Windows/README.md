@@ -46,8 +46,15 @@ bin 目录下获取相应版本的 dll 和头文件
     microphone_interface->StartRecording(this);
   }
 ```
+### 5.实现回调
+```c++
+void QNAudioRecorderDemo::OnVolumeChanged(double volume) {
+  // 音量更新 
+  std::cout << " record volume : " << volume << std::endl;
+}
+```
 
-### 5. 停止音频录制
+### 6. 停止音频录制
 ```c++
   if (microphone_interface) {
      microphone_interface->StopRecording();
