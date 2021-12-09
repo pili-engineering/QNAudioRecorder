@@ -62,5 +62,5 @@ recorder.delegate = self;
 ### 停止录制
 
 ```objc
-[recorder stop];
+BOOL isSuccess = [recorder stop];
 ```
