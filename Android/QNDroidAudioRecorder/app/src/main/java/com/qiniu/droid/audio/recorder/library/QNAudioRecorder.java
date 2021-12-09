@@ -217,7 +217,7 @@ public class QNAudioRecorder {
    */
   public boolean stop() {
     Log.d(TAG, "stopRecording");
-    if (recorderInstance.audioRecord = null) {
+    if (recorderInstance == null || recorderInstance.audioRecord == null) {
       Log.e(TAG, "Stop without start.");
       return false;
     }
@@ -228,6 +228,7 @@ public class QNAudioRecorder {
     }
     audioThread = null;
     releaseAudioResources();
+    recorderInstance = null;
     return true;
   }
 

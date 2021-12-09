@@ -27,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
         mVolumeText = findViewById(R.id.volume_text);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAudioRecorder = null;
+    }
+
     public void startRecord(View view) {
         if (!isPermissionOK()) {
             Toast.makeText(this, "Some permissions is not approved !!!", Toast.LENGTH_SHORT).show();
