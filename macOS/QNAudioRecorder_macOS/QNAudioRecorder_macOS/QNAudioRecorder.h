@@ -31,6 +31,8 @@
  *
  * @return QNAudioRecorder   注：成功时返回QNAudioRecorder实例;
  *                           失败时返回nil
+ *
+ * @warning 该方法使用到了系统内置麦克风设备，该设备为系统独占资源，请勿重复调用，如多次调用会失败并返回nil。
  */
 + (QNAudioRecorder *) start;
 
