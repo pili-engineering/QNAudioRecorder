@@ -43,7 +43,7 @@ bin 目录下获取相应版本的 dll 和头文件
 ### 4. 开始音频录制
 ```c++
   if (microphone_interface) {
-    microphone_interface->StartRecording(this);
+    microphone_interface->Start(this);
   }
 ```
 ### 5.实现回调
@@ -57,7 +57,7 @@ void QNAudioRecorderDemo::OnVolumeChanged(double volume) {
 ### 6. 停止音频录制
 ```c++
   if (microphone_interface) {
-     microphone_interface->StopRecording();
+     microphone_interface->Stop();
   }
 
 ```
