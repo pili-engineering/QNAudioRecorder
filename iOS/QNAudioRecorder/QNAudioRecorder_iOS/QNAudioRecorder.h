@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @since v1.0.0
  */
-- (BOOL)startRecording;
+- (BOOL)start;
 
 /*!
  * @abstract 停止录制。
@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @since v1.0.0
  */
-- (BOOL)stopRecording;
+- (BOOL)stop;
 
 @end
 

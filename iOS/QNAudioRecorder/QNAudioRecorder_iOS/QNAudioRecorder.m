@@ -195,8 +195,8 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     NSLog(@"QNMicrophoneRecorder dealloc: %p", self);
 }
 
-- (BOOL)startRecording {
-    NSLog(@"startRecording");
+- (BOOL)start {
+    NSLog(@"start");
     
     if (self.isRunning) {
         return NO;
@@ -214,8 +214,8 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     return NO;
 }
 
-- (BOOL)stopRecording {
-    NSLog(@"stopRecording");
+- (BOOL)stop {
+    NSLog(@"stop");
     
     if (!self.isRunning) {
         return NO;

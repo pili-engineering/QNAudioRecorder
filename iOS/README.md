@@ -39,7 +39,7 @@
 ### 初始化
 
 ```objc
-QNMicrophoneRecorder *recorder = [QNMicrophoneRecorder sharedInstance];
+QNAudioRecorder *recorder = [QNAudioRecorder sharedInstance];
 ```
 
 ### 设置代理
@@ -51,7 +51,7 @@ recorder.delegate = self;
 ### 实现回调
 
 ```objc
-- (void)microphoneRecorder:(QNMicrophoneRecorder *)recorder volume:(double)volume {
+- (void)audioRecorder:(QNAudioRecorder *)audioRecorder volume:(double)volume {
     dispatch_async(dispatch_get_main_queue(), ^{
         // 更新 UI 展示音量
     });
@@ -61,11 +61,11 @@ recorder.delegate = self;
 ### 开启录制
 
 ```objc
-BOOL isSuccess = [recorder startRecording];
+BOOL isSuccess = [recorder start];
 ```
 
 ### 停止录制
 
 ```objc
-BOOL isSuccess = [recorder stopRecording];
+BOOL isSuccess = [recorder stop];
 ```

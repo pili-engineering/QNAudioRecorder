@@ -130,11 +130,11 @@
     button.selected = !button.selected;
     if (button.selected) {
         [self startTimer];
-        BOOL isSuccess = [_recorder startRecording];
+        BOOL isSuccess = [_recorder start];
         NSLog(@"开始录制是否成功：%d", isSuccess);
     } else {
         [self stoptimer];
-        BOOL isSuccess =[_recorder stopRecording];
+        BOOL isSuccess =[_recorder stop];
         NSLog(@"停止录制是否成功：%d", isSuccess);
     }
 }
