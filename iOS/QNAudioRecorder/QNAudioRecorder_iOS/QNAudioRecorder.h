@@ -6,25 +6,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <AVFoundation/AVFoundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
 
 @class QNAudioRecorder;
 
 @protocol QNAudioRecorderDelegate <NSObject>
 
-@optional
-
 /*!
- * @abstract 麦克风采集音频数据的回调。
+ * @abstract 麦克风采集音频音量的回调
  *
- * @since v1.0.0
- */
-- (void)audioRecorder:(QNAudioRecorder *)audioRecorder didGetAudioBuffer:(AudioBuffer *)audioBuffer asbd:(const AudioStreamBasicDescription *)asbd;
-
-/*!
- * @abstract 麦克风采集音频音量的回调，约 100ms 左右回调一次。
+ * @param audioRecorder QNAudioRecorder 实例
+ *
+ * @param volume 音量值，范围 0 ～ 1
  *
  * @since v1.0.0
  */
@@ -42,30 +34,23 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<QNAudioRecorderDelegate> delegate;
 
 /*!
- * @abstract QNMicrophoneRecorder 单例。
- *
- * @since v1.0.0
- */
-+ (instancetype)sharedInstance;
-
-/*!
  * @abstract 开始录制。
  *
- * @return 是否成功
+ * @warning 该方法使用到了系统内置麦克风设备，该设备为系统独占资源，请勿重复调用，如多次调用会失败并返回 nil。
+ *
+ * @return QNAudioRecorder 实例，成功则返回 QNAudioRecorder 实例，失败则返回为空
  *
  * @since v1.0.0
  */
-- (BOOL)start;
++ (QNAudioRecorder *)start;
 
 /*!
  * @abstract 停止录制。
  *
- * @return 是否成功
+ * @return 是否成功，返回 YES 则成功，NO 则失败
  *
  * @since v1.0.0
  */
 - (BOOL)stop;
 
 @end
-
-NS_ASSUME_NONNULL_END

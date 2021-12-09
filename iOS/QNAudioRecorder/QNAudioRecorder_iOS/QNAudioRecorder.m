@@ -7,6 +7,7 @@
 
 #import "QNAudioRecorder.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 #import "QNCommon.h"
 
@@ -34,16 +35,11 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
 
 @end
 
+static QNAudioRecorder *sharedInstance;
+
 @implementation QNAudioRecorder
 
-+ (instancetype)sharedInstance {
-    static QNAudioRecorder *sharedInstance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[QNAudioRecorder alloc] init];
-    });
-    return sharedInstance;
-}
+#pragma mark - Init
 
 - (instancetype)init {
     if(self = [super init]) {
@@ -195,28 +191,27 @@ const NSInteger kQNAudioCaptureSampleRate = 48000;
     NSLog(@"QNMicrophoneRecorder dealloc: %p", self);
 }
 
-- (BOOL)start {
-    NSLog(@"start");
+#pragma mark - Public
+
++ (QNAudioRecorder*)start{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[QNAudioRecorder alloc] init];
+    });
     
-    if (self.isRunning) {
-        return NO;
+    if (sharedInstance.isRunning) {
+        return nil;
     }
-    
-    if ([self resetAudioSession]) {
-        OSStatus result = AudioOutputUnitStart(self.componentInstance);
-        if (result == noErr) {
-            self.isRunning = YES;
-            return YES;
-        }
-        NSLog(@"AudioOutputUnitStart result: %ld", (long)result);
-        return NO;
+    OSStatus status = AudioOutputUnitStart(sharedInstance.componentInstance);
+    if (status != noErr) {
+        NSLog(@"AudioOutputUnitStart result: %ld", (long)status);
+        return nil;
     }
-    return NO;
+    sharedInstance.isRunning = YES;
+    return sharedInstance;
 }
 
-- (BOOL)stop {
-    NSLog(@"stop");
-    
+- (BOOL)stop {    
     if (!self.isRunning) {
         return NO;
     }
@@ -370,13 +365,6 @@ static OSStatus handleInputBuffer(void *inRefCon,
         
         if (source.microphoneInputGain != 1.0) {
             [QNCommon scaleWithSat:&buffer scale:source.microphoneInputGain max:10.0 min:0.0];
-        }
-
-        if (source.delegate && [source.delegate respondsToSelector:@selector(audioRecorder:didGetAudioBuffer:asbd:)]) {
-            AudioStreamBasicDescription *asbd = calloc(1, sizeof(AudioStreamBasicDescription));
-            memcpy(asbd, &source->_asbd, sizeof(AudioStreamBasicDescription));
-            [source.delegate audioRecorder:source didGetAudioBuffer:&buffer asbd:asbd];
-            free(asbd);
         }
         
         source.count++;

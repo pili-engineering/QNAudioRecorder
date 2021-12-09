@@ -6,7 +6,7 @@
 //
 
 #import "ViewController.h"
-#import <QNAudioRecorder_iOS/QNAudioRecorder.h>
+#import <QNAudioRecorder_iOS/QNAudioRecorder_iOS.h>
 
 @interface ViewController ()<QNAudioRecorderDelegate>
 
@@ -27,12 +27,6 @@
     // Do any additional setup after loading the view.
     
     [self setupUI];
-    [self setupAudioRecorder];
-}
-
-- (void)setupAudioRecorder {
-    _recorder = [QNAudioRecorder sharedInstance];
-    _recorder.delegate = self;
 }
 
 - (void)audioRecorder:(QNAudioRecorder *)recorder volume:(double)volume {
@@ -130,8 +124,15 @@
     button.selected = !button.selected;
     if (button.selected) {
         [self startTimer];
-        BOOL isSuccess = [_recorder start];
-        NSLog(@"开始录制是否成功：%d", isSuccess);
+        QNAudioRecorder *recorder = [QNAudioRecorder start];
+        if (recorder) {
+            _recorder = recorder;
+            if (_recorder) {
+                _recorder.delegate = self;
+            }
+        } else {
+            NSLog(@"开始录制失败！");
+        }
     } else {
         [self stoptimer];
         BOOL isSuccess =[_recorder stop];

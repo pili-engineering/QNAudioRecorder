@@ -11,17 +11,17 @@
 
 ## 编译获取 SDK
 
-编译 [iOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/blob/main/iOS)下的 `QNAudioRecorder`，工程 Products 会自动生成 QNAudioRecorder.framework，右键 "Show in Finder" 后，即可拿到对应的 SDK 真机版本，注意区分 Debug 和 Release。
+编译 [iOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/blob/main/iOS)下的 `QNAudioRecorder`，工程 Products 会自动生成 QNAudioRecorder_iOS.framework，右键 "Show in Finder" 后，即可拿到对应的 SDK 真机版本，注意区分 Debug 和 Release。
 
 
 ## 手动导入 SDK
 
-将获取得到的 QNAudioRecorder.framework 导入到你的 Xcode 工程中
+将获取得到的 QNAudioRecorder_iOS.framework 导入到你的 Xcode 工程中
 
 在需要使用的类中，引入后使用，具体方式可参见 QNAudioRecorderDemo
 
 ```Objective-C
-#import <QNAudioRecorder/QNAudioRecorder.h>
+#import <QNAudioRecorder_iOS/QNAudioRecorder_iOS.h>
 ```
 
 
@@ -36,10 +36,10 @@
 
 ## API 使用
 
-### 初始化
+### 开启录制
 
 ```objc
-QNAudioRecorder *recorder = [QNAudioRecorder sharedInstance];
+QNAudioRecorder *recorder = [QNAudioRecorder start];
 ```
 
 ### 设置代理
@@ -56,12 +56,6 @@ recorder.delegate = self;
         // 更新 UI 展示音量
     });
 }
-```
-
-### 开启录制
-
-```objc
-BOOL isSuccess = [recorder start];
 ```
 
 ### 停止录制
