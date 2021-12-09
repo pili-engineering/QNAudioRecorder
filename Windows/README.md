@@ -6,15 +6,16 @@
 ## 开发环境
 
 - [Visual Studio 2017](https://www.visualstudio.com/zh-hans/vs/older-downloads/) 或 [Qt Creator](http://download.qt.io/archive/qt/)
-- Win32 Platform
 
+## sdk 获取
+bin 目录下获取相应版本的 dll 和头文件
 
 ## 接口使用
 
 
 ### 1. 创建录制类
 ```c++
-  microphone_interface = QNAudioRecorder::CreateAudioRecorder(this);
+  microphone_interface = QNAudioRecorder::CreateAudioRecorder();
 ```
 
 ### 2. 释放录制类
@@ -42,7 +43,7 @@
 ### 4. 开始音频录制
 ```c++
   if (microphone_interface) {
-    microphone_interface->StartRecording();
+    microphone_interface->StartRecording(this);
   }
 ```
 
