@@ -370,7 +370,7 @@ static OSStatus handleInputBuffer(void *inRefCon,
         source.count++;
         if (source.count >= 5) {
             source.count = 0;
-            double volume = [QNCommon volumeWithAudioBuffer:&buffer];
+            double volume = [QNCommon calculateAudioBuffer:&buffer overload:32767];
             if (source.delegate && [source.delegate respondsToSelector:@selector(audioRecorder:volume:)]) {
                 [source.delegate audioRecorder:source volume:volume];
             }

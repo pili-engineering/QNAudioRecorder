@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)scaleWithSat:(AudioBuffer *)audioBuffer scale:(double)scale max:(float)max min:(float) min;
 
-+ (float)volumeWithAudioBuffer:(AudioBuffer *)audioBuffer;
++ (double)calculateAudioBuffer:(AudioBuffer *)buffer overload:(int)overload;
 @end
 
 NS_ASSUME_NONNULL_END

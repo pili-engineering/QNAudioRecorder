@@ -8,6 +8,16 @@
 #import "QNCommon.h"
 #define kQNMixVolume 87.2984313
 
+/*
+ * The minimum audio level permitted.
+ */
+#define MIN_AUDIO_LEVEL -127
+/*
+ * The maximum audio level permitted.
+ */
+#define MAX_AUDIO_LEVEL 0
+
+
 @implementation QNCommon
 
 + (void)scaleWithSat:(AudioBuffer *)audioBuffer scale:(double)scale max:(float)max min:(float) min {
@@ -34,26 +44,33 @@
     }
 }
 
-+ (float)volumeWithAudioBuffer:(AudioBuffer *)audioBuffer {
-    if (audioBuffer->mDataByteSize == 0) {
-        return 0.0;
-    }
++ (double)calculateAudioBuffer:(AudioBuffer *)buffer overload:(int)overload {
+    double rms = 0;
+    int length = buffer->mDataByteSize;
+    short bufferByte[buffer->mDataByteSize/2];
+    memcpy(bufferByte, buffer->mData, length);
     
-    long long pcmAllLenght = 0;
-    short bufferByte[audioBuffer->mDataByteSize/2];
-    memcpy(bufferByte, audioBuffer->mData, audioBuffer->mDataByteSize);
-    
-    // 将 buffer 内容取出，进行平方和运算
-    for (int i = 0; i < audioBuffer->mDataByteSize/2; i++) {
-        pcmAllLenght += bufferByte[i] * bufferByte[i];
+    for (int i = 0; i < buffer->mDataByteSize/2; i++) {
+        double sample = bufferByte[i];
+        sample /= overload;
+        rms += sample * sample;
     }
-    // 平方和除以数据总长度，得到音量大小。
-    float mean = pcmAllLenght / (double)audioBuffer->mDataByteSize;
-    float volume = 0.0;
-    if (mean != 0) {
-        volume =10 * log10(mean);
+    rms = (length == 0) ? 0 : sqrt(rms / length);
+
+    double db;
+
+    if (rms > 0) {
+        db = 20 * log10(rms);
+        if (db < MIN_AUDIO_LEVEL){
+            db = MIN_AUDIO_LEVEL;
+        } else if (db > MAX_AUDIO_LEVEL){
+            db = MAX_AUDIO_LEVEL;
+        }
+    } else {
+        db = MIN_AUDIO_LEVEL;
     }
-    
-    return abs(volume)/kQNMixVolume;
+    double result = round(db);
+    return (result + 127) / 127;
 }
+
 @end
