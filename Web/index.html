@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./dist/bundle.js"></script>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    body>div {
+      width: 500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div>
+      <button id="startBtn">start</button>
+      <button id="stopBtn">stop</button>
+    </div>
+    <div id="volume"></div>
+  </div>
+  <script>
+
+    const startBtn = document.getElementById("startBtn")
+    const stopBtn = document.getElementById("stopBtn")
+
+    const volume = document.getElementById("volume")
+
+    startBtn.onclick = () => {
+      QNAudioRecorder.start(function (v) {
+        volume.innerHTML = v;
+      })
+    }
+
+    stopBtn.onclick = () => {
+      QNAudioRecorder.stop()
+    }
+  </script>
+
+</body>
+
+</html>

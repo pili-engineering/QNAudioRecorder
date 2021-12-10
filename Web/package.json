@@ -1,0 +1,14 @@
+{
+  "name": "qn-audio-recorder",
+  "version": "1.0.0",
+  "author": "yao<yaoyaox023@gmail.com>",
+  "source": "src/index.js",
+  "scripts": {
+    "build": "microbundle -o dist/bundle.js --no-pkg-main --name QNAudioRecorder -f umd",
+    "start": "http-server ."
+  },
+  "devDependencies": {
+    "http-server": "^14.0.0",
+    "microbundle": "^0.14.2"
+  }
+}
