@@ -65,7 +65,7 @@ namespace qiniu {
       double volume = 0.0;
       volume = ProcessAudioLevel(
         (int16_t *)audio_samples,
-        bytes_per_sample * num_samples / sizeof(int16_t));
+        bytes_per_sample * num_samples / sizeof(int16_t), 0);
       auto dur_time = std::chrono::duration_cast<std::chrono::milliseconds>(
         now_time - last_callback_time_).count();
       if (dur_time >= CALLBACK_PER_MS) {
@@ -309,21 +309,30 @@ namespace qiniu {
     return QNRTC_FAILED;
   }
 
-  double QNMicrophoneManager::ProcessAudioLevel(const int16_t* data, const int32_t& data_size) {
-    double ret = 0.0;
-    if (data_size > 0) {
-      int32_t sum = 0;
-      int16_t* pos = (int16_t *)data;
-      for (int i = 0; i < data_size; i++) {
-        sum += abs(*pos);
-        pos++;
-      }
+  double QNMicrophoneManager::ProcessAudioLevel(const int16_t* data, const int32_t& data_size, int32_t offset) {
+    double rms = 0;
+    for (; offset < data_size; offset++) {
+      double sample = data[offset];
+      sample /= VOLUMEMAX;
+      rms += sample * sample;
+    }
+    rms = (data_size == 0) ? 0 : sqrt(rms / data_size);
+    double db;
+    double MIN_AUDIO_LEVEL = -127;
+    double MAX_AUDIO_LEVEL = 0;
 
-      ret = sum * 5.0 / (data_size * VOLUMEMAX);
-      ret = core_min(ret, 1.0);
+    if (rms > 0) {
+      db = 20 * log10(rms);
+      if (db < MIN_AUDIO_LEVEL)
+        db = MIN_AUDIO_LEVEL;
+      else if (db > MAX_AUDIO_LEVEL)
+        db = MAX_AUDIO_LEVEL;
+    }
+    else {
+      db = MIN_AUDIO_LEVEL;
     }
 
-    return ret;
+    return (round(db) + 127) / 127;
   }
 
   std::wstring QNMicrophoneManager::Utf8ToWstring(const std::string& utf8_str) {

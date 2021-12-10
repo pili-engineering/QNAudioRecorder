@@ -63,7 +63,7 @@ namespace qiniu {
     int32_t StartRecordingInternal();
     int32_t StopRecordingInternal();
     int32_t GetAudioVolumeInternal(AudioDeviceType device_type, uint32_t* volume);
-    double ProcessAudioLevel(const int16_t* data, const int32_t& data_size);
+    double ProcessAudioLevel(const int16_t* data, const int32_t& data_size, int32_t offset);
     std::wstring Utf8ToWstring(const std::string& utf8_str);
     std::string  WstringToUtf8(const std::wstring& wstr);
     std::string  UnicodeToUtf(std::wstring str);

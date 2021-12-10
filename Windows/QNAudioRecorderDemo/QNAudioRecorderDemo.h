@@ -16,7 +16,7 @@ class QNAudioRecorderDemo
   virtual void OnVolumeChanged(double volume);
 
  private:
-  QNAudioRecorder* microphone_interface;
+  QNAudioRecorder* audio_recorder;
 };
 
 
