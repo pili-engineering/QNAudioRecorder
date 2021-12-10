@@ -29,6 +29,8 @@
     [self setupUI];
 }
 
+#pragma mark - QNAudioRecorderDelegate
+
 - (void)audioRecorder:(QNAudioRecorder *)recorder volume:(double)volume {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self setVolume:volume];
@@ -88,16 +90,12 @@
     [self.volumeLabel sizeToFit];
 }
 
-#pragma mark - 连麦时长计算
+#pragma mark - 时长计算
 
 - (void)startTimer {
-    
     [self stoptimer];
     
-    self.durationTimer = [NSTimer timerWithTimeInterval:1
-                                             target:self
-                                           selector:@selector(timerAction)
-                                           userInfo:nil repeats:YES];
+    self.durationTimer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.durationTimer forMode:NSRunLoopCommonModes];
 }
 
