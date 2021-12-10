@@ -34,7 +34,7 @@ static inline void run_on_main_queue(void (^block)(void)) {
 static QNAudioRecorder *_sharedInstance;
 
 #pragma mark - public
-+(QNAudioRecorder*) start{
++(QNAudioRecorder*)start{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[QNAudioRecorder alloc] init];
@@ -54,7 +54,7 @@ static QNAudioRecorder *_sharedInstance;
 // ========================================
 #pragma mark - Initialization
 // ========================================
-- (id) init {
+- (id)init {
     if (self = [super init]) {
         [self setupASBD];
         [self setupAudioComponent];
@@ -157,7 +157,7 @@ static OSStatus RecordCallback(void *inRefCon,
                                       inBusNumber,
                                       inNumberFrames,
                                       &bufferList);
-    [audioRecorder volumeWithAudioBuffer:&buffer];
+    [audioRecorder calculateAudioBuffer:&buffer overload:32767];
     free(buffer.mData);
     
     return status;
@@ -187,6 +187,38 @@ static OSStatus RecordCallback(void *inRefCon,
     return self.volume;
 }
 
+- (double)calculateAudioBuffer:(AudioBuffer *)buffer overload:(int)overload{
+    double rms = 0;
+        int length = buffer->mDataByteSize;
+        short bufferByte[buffer->mDataByteSize/2];
+        memcpy(bufferByte, buffer->mData, length);
+        
+        for (int i = 0; i < buffer->mDataByteSize/2; i++) {
+            double sample = bufferByte[i];
+            sample /= overload;
+            rms += sample * sample;
+        }
+        rms = (length == 0) ? 0 : sqrt(rms / length);
+
+        double db;
+        double MIN_AUDIO_LEVEL = -127;
+        double MAX_AUDIO_LEVEL = 0;
+        if (rms > 0) {
+            db = 20 * log10(rms);
+            if (db < MIN_AUDIO_LEVEL){
+                db = MIN_AUDIO_LEVEL;
+            } else if (db > MAX_AUDIO_LEVEL){
+                db = MAX_AUDIO_LEVEL;
+            }
+        }
+        else {
+            db = MIN_AUDIO_LEVEL;
+        }
+        int result = (int)round(db);
+        double volume = (result + 127 ) / 127.00;
+        self.volume = volume;
+        return volume;
+}
 #pragma mark - Timer
 - (void)startTimer {
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, NULL);
