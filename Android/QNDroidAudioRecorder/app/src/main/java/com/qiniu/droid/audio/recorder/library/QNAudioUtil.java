@@ -2,35 +2,61 @@ package com.qiniu.droid.audio.recorder.library;
 
 public class QNAudioUtil {
 
-    /**
-     * byte[] temp = new byte[size];
-     * for (int i = 0; i < size; i++) {
-     *      temp[i] = Byte.MAX_VALUE;
-     * }
-     * maxVolume = AudioUtil.doubleCalculateVolume(temp);
-     */
-    public static final double MAV_VOLUME = 39.11730073691797;
+    static final double MAX_AUDIO_LEVEL = 127;
+    public static int calculateAudioLevel(
+           short[] samples, int length,
+           int overload) {
+       /*
+        * Calculate the root mean square (RMS) of the signal.
+        */
+       double rms = 0;
 
-    /**
-     * 计算每个 buffer 的平均音量值
-     * 位宽按照 16bit 计算
-     */
-    public static double doubleCalculateVolume(byte[] buffer) {
-        double sumVolume = 0.0;
-        double avgVolume = 0.0;
-        double volume = 0.0;
-        for (int i = 0; i < buffer.length; i += 2) {
-            int v1 = buffer[i] & 0xFF;
-            int v2 = buffer[i + 1] & 0xFF;
-            int temp = v1 + (v2 << 8);
-            if (temp >= 0x8000) {
-                temp = 0xffff - temp;
-            }
-            sumVolume += Math.abs(temp);
-        }
-        avgVolume = sumVolume / buffer.length / 2;
-        volume = Math.log10(1 + avgVolume) * 10;
-        return volume;
+       int offset = 0;
+       for (; offset < length; offset++) {
+           double sample = samples[offset];
+
+           sample /= overload;
+           rms += sample * sample;
+       }
+       rms = (length == 0) ? 0 : Math.sqrt(rms / length);
+
+       /*
+        * The audio level is a logarithmic measure of the
+        * rms level of an audio sample relative to a reference
+        * value and is measured in decibels.
+        */
+       double db;
+
+       /*
+        * The minimum audio level permitted.
+        */
+        final double MIN_AUDIO_LEVEL = -127;
+
+       /*
+        * The maximum audio level permitted.
+        */
+       final double MAX_AUDIO_LEVEL = 0;
+
+       if (rms > 0) {
+           /*
+            * The "zero" reference level is the overload level,
+            * which corresponds to 1.0 in this calculation, because
+            * the samples are normalized in calculating the RMS.
+            */
+           db = 20 * Math.log10(rms);
+
+           /*
+            * Ensure that the calculated level is within the minimum
+            * and maximum range permitted.
+            */
+           if (db < MIN_AUDIO_LEVEL)
+               db = MIN_AUDIO_LEVEL;
+           else if (db > MAX_AUDIO_LEVEL)
+               db = MAX_AUDIO_LEVEL;
+       } else {
+           db = MIN_AUDIO_LEVEL;
+       }
+       return (int)Math.round(db);
     }
 }
 
