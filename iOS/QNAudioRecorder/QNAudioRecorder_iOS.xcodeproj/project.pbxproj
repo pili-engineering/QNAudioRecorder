@@ -1,0 +1,370 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AAA18822275F53C000736B59 /* QNAudioRecorder.docc in Sources */ = {isa = PBXBuildFile; fileRef = AAA18821275F53C000736B59 /* QNAudioRecorder.docc */; };
+		AAA18823275F53C000736B59 /* QNAudioRecorder_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = AAA18820275F53C000736B59 /* QNAudioRecorder_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AAA1883B275F56C100736B59 /* QNAudioRecorder.h in Headers */ = {isa = PBXBuildFile; fileRef = AAA18839275F56C100736B59 /* QNAudioRecorder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AAA1883C275F56C100736B59 /* QNAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA1883A275F56C100736B59 /* QNAudioRecorder.m */; };
+		AAA1883F275F575E00736B59 /* QNCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = AAA1883D275F575E00736B59 /* QNCommon.h */; };
+		AAA18840275F575E00736B59 /* QNCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = AAA1883E275F575E00736B59 /* QNCommon.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AAA1881D275F53C000736B59 /* QNAudioRecorder_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QNAudioRecorder_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AAA18820275F53C000736B59 /* QNAudioRecorder_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNAudioRecorder_iOS.h; sourceTree = "<group>"; };
+		AAA18821275F53C000736B59 /* QNAudioRecorder.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = QNAudioRecorder.docc; sourceTree = "<group>"; };
+		AAA18839275F56C100736B59 /* QNAudioRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNAudioRecorder.h; sourceTree = "<group>"; };
+		AAA1883A275F56C100736B59 /* QNAudioRecorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNAudioRecorder.m; sourceTree = "<group>"; };
+		AAA1883D275F575E00736B59 /* QNCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QNCommon.h; sourceTree = "<group>"; };
+		AAA1883E275F575E00736B59 /* QNCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QNCommon.m; sourceTree = "<group>"; };
+		AAA18842275F5A8E00736B59 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		AAA18844275F5A9500736B59 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.3.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AAA1881A275F53C000736B59 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AAA18813275F53C000736B59 = {
+			isa = PBXGroup;
+			children = (
+				AAA1881F275F53C000736B59 /* QNAudioRecorder_iOS */,
+				AAA1881E275F53C000736B59 /* Products */,
+				AAA18841275F5A8E00736B59 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AAA1881E275F53C000736B59 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAA1881D275F53C000736B59 /* QNAudioRecorder_iOS.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AAA1881F275F53C000736B59 /* QNAudioRecorder_iOS */ = {
+			isa = PBXGroup;
+			children = (
+				AAA18820275F53C000736B59 /* QNAudioRecorder_iOS.h */,
+				AAA18839275F56C100736B59 /* QNAudioRecorder.h */,
+				AAA1883A275F56C100736B59 /* QNAudioRecorder.m */,
+				AAA1883D275F575E00736B59 /* QNCommon.h */,
+				AAA1883E275F575E00736B59 /* QNCommon.m */,
+				AAA18821275F53C000736B59 /* QNAudioRecorder.docc */,
+			);
+			path = QNAudioRecorder_iOS;
+			sourceTree = "<group>";
+		};
+		AAA18841275F5A8E00736B59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AAA18844275F5A9500736B59 /* AudioUnit.framework */,
+				AAA18842275F5A8E00736B59 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AAA18818275F53C000736B59 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAA18823275F53C000736B59 /* QNAudioRecorder_iOS.h in Headers */,
+				AAA1883B275F56C100736B59 /* QNAudioRecorder.h in Headers */,
+				AAA1883F275F575E00736B59 /* QNCommon.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AAA1881C275F53C000736B59 /* QNAudioRecorder_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAA18826275F53C000736B59 /* Build configuration list for PBXNativeTarget "QNAudioRecorder_iOS" */;
+			buildPhases = (
+				AAA18818275F53C000736B59 /* Headers */,
+				AAA18819275F53C000736B59 /* Sources */,
+				AAA1881A275F53C000736B59 /* Frameworks */,
+				AAA1881B275F53C000736B59 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QNAudioRecorder_iOS;
+			productName = QNAudioRecorder;
+			productReference = AAA1881D275F53C000736B59 /* QNAudioRecorder_iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AAA18814275F53C000736B59 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1300;
+				TargetAttributes = {
+					AAA1881C275F53C000736B59 = {
+						CreatedOnToolsVersion = 13.0;
+					};
+				};
+			};
+			buildConfigurationList = AAA18817275F53C000736B59 /* Build configuration list for PBXProject "QNAudioRecorder_iOS" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AAA18813275F53C000736B59;
+			productRefGroup = AAA1881E275F53C000736B59 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AAA1881C275F53C000736B59 /* QNAudioRecorder_iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AAA1881B275F53C000736B59 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AAA18819275F53C000736B59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AAA1883C275F56C100736B59 /* QNAudioRecorder.m in Sources */,
+				AAA18822275F53C000736B59 /* QNAudioRecorder.docc in Sources */,
+				AAA18840275F575E00736B59 /* QNCommon.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AAA18824275F53C000736B59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AAA18825275F53C000736B59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AAA18827275F53C000736B59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.QNAudioRecorder;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AAA18828275F53C000736B59 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = GDFHW66V92;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiniu.QNAudioRecorder;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AAA18817275F53C000736B59 /* Build configuration list for PBXProject "QNAudioRecorder_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAA18824275F53C000736B59 /* Debug */,
+				AAA18825275F53C000736B59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAA18826275F53C000736B59 /* Build configuration list for PBXNativeTarget "QNAudioRecorder_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AAA18827275F53C000736B59 /* Debug */,
+				AAA18828275F53C000736B59 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AAA18814275F53C000736B59 /* Project object */;
+}
