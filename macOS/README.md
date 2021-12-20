@@ -10,7 +10,7 @@
 
 ## 编译获取 SDK
 
-编译 [macOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/macOS)下的 `QNAudioRecorder_macOS`，工程 Products 会自动生成 QNAudioRecorder_macOS.framework。
+编译 [macOS 文件夹](https://github.com/pili-engineering/QNAudioRecorder/tree/main/macOS)下的 `QNAudioRecorder_macOS`，工程 Products 会自动生成 QNAudioRecorder_macOS.framework。
 
 
 ## 手动导入 SDK
@@ -62,5 +62,5 @@ recorder.delegate = self;
 ### 停止录制
 
 ```objc
-[recorder stop];
+BOOL isSuccess = [recorder stop];
 ```

@@ -8,6 +8,7 @@ import android.os.Process;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class QNAudioRecorder {
   private static final String TAG = "QNAudioRecorder";
@@ -82,10 +83,11 @@ public class QNAudioRecorder {
             if (++count == DEFAULT_VOLUME_UPDATE_FREQUENCY) {
               count = 0;
               byte[] temp = new byte[bytesRead];
-              byteBuffer.rewind();
               byteBuffer.get(temp, 0, bytesRead);
-              double volume = QNAudioUtil.doubleCalculateVolume(temp);
-              volumeCallback.onVolumeChanged(volume / QNAudioUtil.MAV_VOLUME);
+              byteBuffer.rewind();
+              short[] samples = readShortByNativeOrder(temp);
+              double volume = QNAudioUtil.calculateAudioLevel(samples, samples.length, Short.MAX_VALUE);
+              volumeCallback.onVolumeChanged((volume + QNAudioUtil.MAX_AUDIO_LEVEL) / QNAudioUtil.MAX_AUDIO_LEVEL);
             }
           }
         } else {
@@ -285,5 +287,16 @@ public class QNAudioRecorder {
       default:
         throw new IllegalArgumentException("Bad audio format " + audioFormat);
     }
+  }
+
+  private short[] readShortByNativeOrder(byte[] data) {
+    ByteOrder nativeOrder= ByteOrder.nativeOrder();
+    short[] shortValue = new short[data.length / Short.BYTES];
+    for (int index = 0; index < data.length;) {
+      shortValue[index / Short.BYTES] = (short) ((data[index + 0] & 0xFF)
+            | ((data[index + 1] & 0xFF) << 8));
+      index += Short.BYTES;
+    }
+    return shortValue;
   }
 }
