@@ -37,6 +37,7 @@ npm run start
 2. 开始录制
 
 ```js
+// volume 范围 0-1 浮点数
 QNAudioRecorder.start(function (volume) {
   console.log(volume);
 });
